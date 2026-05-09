@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>24hodinový AI Content & Funnel Sprint pro online fitness trenéry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Za 24 hodin vám postavím hotový obsah a jednoduchý funnel, který z followerů dělá platící klienty – bez agentury a bez měsíců ladění.">
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-alt: #0b1020;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --border: #1f2933;
+      --danger: #f97373;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.9);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                   "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #0b1220 0, #020617 55%, #000 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
+    }
+
+    header.hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 48px;
+    }
+
+    .hero-title {
+      font-size: clamp(32px, 4vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin: 0 0 16px;
+    }
+
+    .hero-highlight {
+      background: linear-gradient(120deg, #22c55e, #38bdf8, #a855f7);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 520px;
+      margin-bottom: 24px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: radial-gradient(circle at top left, #38bdf8, #2563eb);
+      color: #0b1120;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 18px 35px rgba(37, 99, 235, 0.55);
+      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, filter 0.12s ease-out;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.07);
+      box-shadow: 0 24px 50px rgba(37, 99, 235, 0.72);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.7);
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .hero-note {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .hero-note strong {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top, #020617 0, #020617 40%, #020617 100%);
+      border-radius: 26px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .hero-card-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .hero-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(34, 197, 94, 0.12);
+      color: #bbf7d0;
+      border: 1px solid rgba(34, 197, 94, 0.5);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .mini-card {
+      border-radius: 16px;
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      background: linear-gradient(145deg, rgba(15,23,42,0.95), rgba(15,23,42,0.6));
+      padding: 10px 10px 11px;
+    }
+    .mini-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .mini-value {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .mini-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      margin-top: 4px;
+      color: var(--muted);
+    }
+    .mini-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+    }
+
+    .hero-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(30, 64, 175, 0.8);
+      padding-top: 10px;
+      margin-top: 4px;
+    }
+    .price-tag {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .price-tag strong {
+      font-size: 18px;
+      color: #e5e7eb;
+    }
+    .hero-badge {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--muted);
+    }
+
+    .section {
+      margin-bottom: 40px;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, rgba(15,23,42,0.96), rgba(15,23,42,0.86));
+      border: 1px solid rgba(30, 64, 175, 0.35);
+      padding: 20px 18px 22px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .section-lead {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .pill {
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--muted);
+    }
+
+    .list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .list li {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .list li::before {
+      content: "•";
+      color: var(--accent);
+      margin-top: 1px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .step {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(30, 64, 175, 0.5);
+      background: linear-gradient(150deg, rgba(15,23,42,0.9), rgba(15,23,42,0.7));
+      padding: 10px 12px 12px;
+    }
+    .step-label {
+      font-size: 11px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .step-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .step-body {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .faq-item {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      background: linear-gradient(145deg, rgba(15,23,42,0.98), rgba(15,23,42,0.7));
+      padding: 10px 12px 11px;
+      margin-bottom: 8px;
+    }
+    .faq-q {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .faq-a {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .cta-final {
+      text-align: center;
+      margin-top: 18px;
+    }
+    .cta-final p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .link-underline {
+      text-decoration: underline;
+      text-decoration-color: rgba(148, 163, 184, 0.7);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px) {
+      .page {
+        padding: 20px 16px 40px;
+      }
+      header.hero {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 22px;
+      }
+      .hero-card {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .section {
+        padding: 16px 14px 18px;
+      }
+      .hero-title {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div>
+        <div class="badge">
+          <span class="badge-dot"></span>
+          <span>Speciálně pro online fitness trenéry</span>
+        </div>
+
+        <h1 class="hero-title">
+          24hodinový <span class="hero-highlight">AI Content & Funnel Sprint</span>
+          pro online trenéry
+        </h1>
+
+        <p class="hero-subtitle">
+          Během 24 hodin vám postavím hotový balík krátkých videí, postů na sítě
+          a jednoduchý funnel, který z followerů dělá platící klienty – bez agentury
+          a bez měsíců ladění.
+        </p>
+
+        <div class="hero-cta-row">
+          <a href="#fit-call" class="btn-primary">
+            Rezervovat 15minutový fit call
+          </a>
+          <a href="#deliverables" class="btn-ghost">
+            Podívat se, co přesně dostanete
+          </a>
+        </div>
+
+        <p class="hero-note">
+          <strong>Maximálně 3 sprinty týdně.</strong> Pokud čtete tuhle stránku, pravděpodobně
+          je ještě volný slot.
+        </p>
+      </div>
+
+      <aside class="hero-card" aria-label="Souhrn sprintu">
+        <div class="hero-card-header">
+          <div>
+            <div class="mini-label">Rychlý souhrn</div>
+            <div class="hero-card-title">Co dostanete za 24 hodin</div>
+          </div>
+          <div class="hero-pill">Done‑for‑you sprint</div>
+        </div>
+
+        <div class="hero-grid">
+          <div class="mini-card">
+            <div class="mini-label">Obsah</div>
+            <div class="mini-value">10 videí + 15 postů</div>
+            <div class="mini-chip">
+              <span class="mini-dot"></span>
+              <span>Připraveno k publikaci</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Funnel</div>
+            <div class="mini-value">Landing + e‑maily</div>
+            <div class="mini-chip">
+              <span class="mini-dot"></span>
+              <span>Lead → call → klient</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card-footer">
+          <div class="price-tag">
+            Investice od<br>
+            <strong>500&nbsp;USD</strong> jednorázově
+          </div>
+          <div class="hero-badge">
+            Garance: když nedodám včas, vracím 30&nbsp;%
+          </div>
+        </div>
+      </aside>
+    </header>
+
+    <!-- PRO KOHO -->
+    <section class="section" id="pro-koho">
+      <h2 class="section-title">Pro koho je tenhle sprint</h2>
+      <p class="section-lead">
+        Pro trenéry a kouče, kteří už mají klienty, ale chybí jim stabilní obsah a
+        jednoduchý systém, kam posílat zájemce.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Online personal trenéři</span>
+        <span class="pill">Hybridní trenéři (offline + online)</span>
+        <span class="pill">Fitness koučové a nutriční poradci</span>
+      </div>
+      <ul class="list">
+        <li>Postujete “když je čas”, ale víte, že by to mělo být systematičtější.</li>
+        <li>Nemáte jasnou cestu od Instagramu/TikToku k placenému programu.</li>
+        <li>Marketing odkládáte, protože trénujete, píšete plány a řešíte klienty.</li>
+      </ul>
+    </section>
+
+    <!-- CO DOSTANETE -->
+    <section class="section" id="deliverables">
+      <h2 class="section-title">Co přesně vám doručím během 24 hodin</h2>
+      <p class="section-lead">
+        Čistý, konkrétní balík – žádná “konzultace do šuplíku”. Vše můžete začít
+        používat hned další den.
+      </p>
+
+      <div class="grid-2">
+        <div>
+          <h3 style="font-size:15px;margin-bottom:6px;">1) 10 krátkých vertikálních videí</h3>
+          <ul class="list">
+            <li>Scénáře a hooky vycházejí z vašeho programu a typických námitek klientů.</li>
+            <li>Template pro video + titulky upravím do vašeho brandu.</li>
+            <li>Dostanete export připravený pro Reels/Shorts/TikTok.</li>
+          </ul>
+
+          <h3 style="font-size:15px;margin:14px 0 6px;">2) 15 připravených postů</h3>
+          <ul class="list">
+            <li>Kombinace edukace, social proof a prodejních postů.</li>
+            <li>Každý post má hotový text (caption) i vizuál.</li>
+            <li>Lze snadno naplánovat v jakémkoli plánovacím nástroji.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 style="font-size:15px;margin-bottom:6px;">3) Jednoduchý “lead‑to‑call” funnel</h3>
+          <ul class="list">
+            <li>Jednostránkový web (landing page) s jasnou nabídkou a CTA.</li>
+            <li>Krátký PDF lead magnet (např. checklist / mini plán) generovaný s pomocí AI.</li>
+            <li>Formulář nebo rezervace konzultace – podle toho, jak prodáváte.</li>
+          </ul>
+
+          <h3 style="font-size:15px;margin:14px 0 6px;">4) E‑mailová uvítací sekvence (3–5 e‑mailů)</h3>
+          <ul class="list">
+            <li>Přivítá nový kontakt, odvypráví váš příběh a vysvětlí, proč váš program funguje.</li>
+            <li>Přidá společenský důkaz (výsledky klientů, reference).</li>
+            <li>Vede k jasné akci – rezervaci callu nebo přímému nákupu.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- JAK SPRINT PROBÍHÁ -->
+    <section class="section" id="fit-call">
+      <h2 class="section-title">Jak sprint probíhá krok za krokem</h2>
+      <p class="section-lead">
+        Žádná věda. Minimum vašeho času, maximum hotových výstupů.
+      </p>
+
+      <div class="grid-2">
+        <div class="step">
+          <div class="step-label">Krok 1</div>
+          <div class="step-title">15minutový fit call</div>
+          <div class="step-body">
+            Na krátkém hovoru projdeme váš program, cílovou skupinu, ceny a kanály, kde už máte publikum.
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-label">Krok 2</div>
+          <div class="step-title">Intake formulář (15–20 minut)</div>
+          <div class="step-body">
+            Vyplníte jednoduchý formulář – odkazy na sítě, fotky/logo, výsledky klientů, tone of voice. To je základ pro AI a celou kreativní část.
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-label">Krok 3</div>
+          <div class="step-title">Produkce (během 24 hodin)</div>
+          <div class="step-body">
+            S pomocí AI vygeneruji návrhy textů a scénářů, doplním vlastní know‑how, postavím landing page a e‑mailovou sekvenci, připravím grafiky a videa.
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-label">Krok 4</div>
+          <div class="step-title">Předání a walkthrough</div>
+          <div class="step-body">
+            Dostanete všechny soubory + krátké video nebo hovor, kde vám ukážu, jak systém používat a co dělat další týden.
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <a href="#cta" class="btn-primary">Chci zjistit, jestli je pro mě volný slot</a>
+      </div>
+    </section>
+
+    <!-- PROC AI + CLOVEK -->
+    <section class="section">
+      <h2 class="section-title">Proč AI + člověk, ne jen další appka</h2>
+      <p class="section-lead">
+        AI ušetří hodiny práce – ale sama o sobě nezná váš program ani realitu vašeho času.
+      </p>
+      <ul class="list">
+        <li>AI pomáhá generovat první verze textů, nápadů na videa a struktury funnelu.</li>
+        <li>Já vše procházím, čistím a přizpůsobuji vaší konkrétní nabídce a klientům.</li>
+        <li>Výsledkem je použitelný systém, ne jen složka náhodného obsahu.</li>
+      </ul>
+    </section>
+
+    <!-- VYSLEDEK -->
+    <section class="section">
+      <h2 class="section-title">Co budete mít v ruce po 24 hodinách</h2>
+      <p class="section-lead">
+        Jasný, uchopitelný výsledek – ne pocit, že musíte “dodělat spoustu věcí”.
+      </p>
+      <ul class="list">
+        <li>Měsíční zásobu kvalitního obsahu včetně textů.</li>
+        <li>Jednoduchý funnel, kam ten obsah vede – z followera na call/klienta.</li>
+        <li>Základní automatizaci, která pracuje na pozadí i když netrénujete.</li>
+        <li>Checklist, co dělat další týden, aby systém nezůstal v šuplíku.</li>
+      </ul>
+    </section>
+
+    <!-- CENA A FAQ -->
+    <section class="section" id="pricing">
+      <h2 class="section-title">Cena sprintu a garance</h2>
+      <p class="section-lead">
+        Jednorázový, jasně ohraničený sprint – žádný nekonečný projekt bez konce.
+      </p>
+
+      <div class="grid-2">
+        <div>
+          <div class="mini-card" style="margin-bottom:10px;">
+            <div class="mini-label">Investice</div>
+            <div class="mini-value">od 500&nbsp;USD</div>
+            <div class="mini-chip">
+              <span class="mini-dot"></span>
+              <span>Jednorázově za celý sprint</span>
+            </div>
+          </div>
+          <ul class="list">
+            <li>Platba převodem nebo kartou (částku si jednoduše přepočítáte).</li>
+            <li>Možnost rozšíření balíku (více videí, další jazyk, delší e‑mailový funnel).</li>
+          </ul>
+          <p style="color:var(--danger);font-size:12px;margin-top:8px;">
+            Garance: pokud v rámci 24 hodin nedodám všechny slíbené výstupy,
+            vracím 30&nbsp;% ceny zpět.
+          </p>
+        </div>
+
+        <div>
+          <div class="faq-item">
+            <div class="faq-q">Nemám skoro žádný obsah, jen pár fotek. Stačí to?</div>
+            <div class="faq-a">
+              Ano. Stačí pár fotek, informace o vašem programu a případně výsledky klientů.
+              Z toho dokážeme s pomocí AI vytvořit použitelný obsah i texty.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">Nemám web ani e‑mailový nástroj.</div>
+            <div class="faq-a">
+              Postavím jednoduchou landing page na no‑code platformě a doporučím
+              základní e‑mailové řešení. Vše nastavím tak, abyste to zvládl/a používat sám/sama.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">Můžeme sprint udělat v češtině i angličtině?</div>
+            <div class="faq-a">
+              Ano, obsah umíme připravit v jednom nebo více jazycích podle toho,
+              kde máte klienty.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ZAVERECNE CTA -->
+    <section class="section" id="cta">
+      <div class="cta-final">
+        <h2 class="section-title">Chcete za 24 hodin systém místo chaosu?</h2>
+        <p>
+          Pokud chcete přestat “něco postovat” a začít systematicky posílat
+          followera k placenému programu, pojďme si krátce zavolat.
+        </p>
+        <a href="TVŮJ_CALENDLY_ODKAZ" class="btn-primary" style="margin-bottom:8px;">
+          Rezervovat 15minutový fit call
+        </a>
+        <div>
+          <a href="mailto:TVŮJ_EMAIL" class="link-underline">
+            Nebo mi napište e‑mail, pokud máte otázky
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
